@@ -48,6 +48,7 @@ internal class FamilyMember : Person, IMarried
         Childs.Remove(child);
     }
 
+    /// <summary>Метод выводит на экран семью</summary>
     public void PrintFamily()
     {
         Console.WriteLine(this.ToString());
@@ -107,31 +108,49 @@ internal class FamilyMember : Person, IMarried
 
     private static void PrintSibling(List<FamilyMember> persons, FamilyMember excludePerson = null!)
     {
-        Console.WriteLine("Brothers:");
-
         if (persons is not null && persons.Count > 0)
         {
-            foreach (FamilyMember child in persons)
+            List<FamilyMember> brothers = persons.Where(x => x.Gender == Gender.Male && x != excludePerson).ToList();
+            List<FamilyMember> sisters = persons.Where(x => x.Gender == Gender.Female && x != excludePerson).ToList();
+
+            Console.WriteLine("Brothers:");
+
+            if (brothers.Count > 0)
             {
-                if (child.Gender == Gender.Male && child != excludePerson)
+                foreach (FamilyMember child in brothers)
                 {
-                    Console.WriteLine(child.ToString());
+                    if (child.Gender == Gender.Male && child != excludePerson)
+                    {
+                        Console.WriteLine(child.ToString());
+                    }
                 }
+            }
+            else
+            {
+                Console.WriteLine("None");
             }
 
             Console.WriteLine("Sisters:");
 
-            foreach (FamilyMember child in persons)
+            if (sisters.Count > 0)
             {
-                if (child.Gender == Gender.Female && child != excludePerson)
+                foreach (FamilyMember child in sisters)
                 {
-                    Console.WriteLine(child.ToString());
+                    if (child.Gender == Gender.Female && child != excludePerson)
+                    {
+                        Console.WriteLine(child.ToString());
+                    }
                 }
+
+            }
+            else
+            {
+                Console.WriteLine("None");
             }
         }
         else
         {
-            Console.WriteLine("None");
+            Console.WriteLine("No brothers and sisters");
         }
 
     }
@@ -171,6 +190,7 @@ internal class FamilyMember : Person, IMarried
     // выводила на экран близких родственников(жену/мужа) и братьев/сестёр определённого человека.
     // Продумайте способ более красивого вывода с использованием горизонтальных и вертикальных черточек.
 
+    /// <summary>Метод выводит на экран близких родственников</summary>
     public static void PrintCloseRelatives(FamilyMember person)
     {
         Console.WriteLine($"{person}'s close relatives:");
