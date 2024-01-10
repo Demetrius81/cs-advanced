@@ -1,7 +1,8 @@
-﻿using Lesson3.Models;
+﻿using Lesson1.Models;
 using System;
+using System.Linq;
 
-namespace Lesson3;
+namespace Lesson1;
 
 internal class FamilyMember : Person, IMarried
 {
@@ -17,7 +18,7 @@ internal class FamilyMember : Person, IMarried
 
             if (value.Gender == this.Gender)
             {
-                throw new ArgumentException("Однополые браки не разрешены законодательством и осуждаются обществом.");
+                throw new ArgumentException("Same-sex marriage is not permitted by law and is condemned by society.");
             }
             else
             {
@@ -57,32 +58,7 @@ internal class FamilyMember : Person, IMarried
         Console.WriteLine("Father:");
         Console.WriteLine(Father is null ? "None" : Father.ToString());
 
-        Console.WriteLine("Brothers:");
-
-        if (Childs is not null && Childs.Count > 1)
-        {
-            foreach (FamilyMember child in Childs)
-            {
-                if (child.Gender == Gender.Male)
-                {
-                    Console.WriteLine(child.ToString());
-                }
-            }
-
-            Console.WriteLine("Sisters:");
-
-            foreach (FamilyMember child in Childs)
-            {
-                if (child.Gender == Gender.Female)
-                {
-                    Console.WriteLine(child.ToString());
-                }
-            }
-        }
-        else
-        {
-            Console.WriteLine("None");
-        }
+        PrintSibling(Childs);
 
         Console.WriteLine("Grandmothers and grandfathers:");
 
@@ -104,6 +80,7 @@ internal class FamilyMember : Person, IMarried
         return $"{Name}";
     }
 
+    /// <summary>Метод выводит на экран генеологическое древо</summary>
     public static void PrintTree(FamilyMember person)
     {
         Console.WriteLine($"{person.LastName}`s family tree:");
@@ -112,22 +89,8 @@ internal class FamilyMember : Person, IMarried
 
     private static void PrintPerson(FamilyMember person)
     {
-        string wife = person.Spouse is null ? "" : $" and wife {person.Spouse}";
-
-        Console.WriteLine($"{person}{wife}");
-
-        if (person.Childs.Count > 0)
-        {
-            Console.Write("Kids: ");
-
-            foreach (var child in person.Childs)
-            {
-                Console.Write($"{child} ");
-            }
-
-        }
-
-
+        PrintSpouse(person);
+        PrintChilds(person.Childs);
         Console.WriteLine();
 
         if (person.Childs.Count > 0)
@@ -142,4 +105,95 @@ internal class FamilyMember : Person, IMarried
         }
     }
 
+    private static void PrintSibling(List<FamilyMember> persons, FamilyMember excludePerson = null!)
+    {
+        Console.WriteLine("Brothers:");
+
+        if (persons is not null && persons.Count > 0)
+        {
+            foreach (FamilyMember child in persons)
+            {
+                if (child.Gender == Gender.Male && child != excludePerson)
+                {
+                    Console.WriteLine(child.ToString());
+                }
+            }
+
+            Console.WriteLine("Sisters:");
+
+            foreach (FamilyMember child in persons)
+            {
+                if (child.Gender == Gender.Female && child != excludePerson)
+                {
+                    Console.WriteLine(child.ToString());
+                }
+            }
+        }
+        else
+        {
+            Console.WriteLine("None");
+        }
+
+    }
+
+    private static void PrintChilds(List<FamilyMember> childs)
+    {
+        if (childs.Count > 0)
+        {
+            Console.Write("Kids: ");
+
+            foreach (var child in childs)
+            {
+                Console.Write($"{child} ");
+            }
+
+        }
+    }
+
+    private static void PrintSpouse(FamilyMember person)
+    {
+        string partner;
+
+        if (person.Spouse is not null)
+        {
+            partner = person.Spouse.Gender == Gender.Male ? $" and husband {person.Spouse}" : $" and wife {person.Spouse}";
+
+        }
+        else
+        {
+            partner = "";
+        }
+
+        Console.WriteLine($"{person}{partner}");
+    }
+
+    // Доработайте приложение генеалогического дерева таким образом чтобы программа
+    // выводила на экран близких родственников(жену/мужа) и братьев/сестёр определённого человека.
+    // Продумайте способ более красивого вывода с использованием горизонтальных и вертикальных черточек.
+
+    public static void PrintCloseRelatives(FamilyMember person)
+    {
+        Console.WriteLine($"{person}'s close relatives:");
+        PrintSpouse(person);
+        List<FamilyMember> sibling = [];
+
+        if (person.Mother is not null)
+        {
+            sibling.AddRange(person.Mother.Childs);
+        }
+
+        if (person.Father is not null)
+        {
+            sibling = sibling.Union(person.Father.Childs).ToList();
+        }
+
+        if (sibling.Count > 0)
+        {
+            PrintSibling(sibling, person);
+        }
+        else
+        {
+            Console.WriteLine($"{person} do not has brothers and systers.");
+        }
+    }
 }
