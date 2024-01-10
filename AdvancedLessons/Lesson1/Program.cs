@@ -51,7 +51,8 @@ internal class Program
         fother.AddChild(children);
         mother.AddChild(children);
 
-        FamilyMember.PrintTree(fother2);
+        //FamilyMember.PrintTree(fother2);
+        FamilyMember.PrintCloseRelatives(fother);
 
         Console.ReadKey(true);
 
