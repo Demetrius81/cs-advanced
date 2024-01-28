@@ -29,12 +29,12 @@ internal abstract class CalcAppBase
 
     internal abstract void RunApp();
 
-    protected static double InputNumber(string message)
+    protected virtual double InputNumber(string message)
     {
-        Console.WriteLine($"Input {message} number and press enter:");
-        Console.Write(">");
+        System.Console.WriteLine($"Input {message} number and press enter:");
+        System.Console.Write(">");
 
-        if (double.TryParse(Console.ReadLine(), out double result))
+        if (double.TryParse(System.Console.ReadLine(), out double result))
         {
             return result;
         }
@@ -62,25 +62,25 @@ internal abstract class CalcAppBase
         if (sender is Calc)
         {
             double? temp = (sender as Calc)?.Result;
-            Console.WriteLine($"{_firstNumber} {e} {_secondNumber} = {temp}");
+            System.Console.WriteLine($"{_firstNumber} {e} {_secondNumber} = {temp}");
             _firstNumber = temp;
         }
     }
 
-    protected bool ErrorMessage()
+    protected virtual bool ErrorMessage()
     {
-        Console.WriteLine("Waring! Something wrong! Push any button to exit program.");
-        Console.ReadKey(true);
+        System.Console.WriteLine("Waring! Something wrong! Push any button to exit program.");
+        System.Console.ReadKey(true);
         return false;
     }
 
-    protected bool RequestToExit()
+    protected virtual bool RequestToExit()
     {
         while (true)
         {
-            Console.Write("Do you really want to quit this wonderful program?\r\nPress Y button to exit and N button to continue >");
-            var key = Console.ReadKey(true).Key;
-            Console.WriteLine();
+            System.Console.Write("Do you really want to quit this wonderful program?\r\nPress Y button to exit and N button to continue >");
+            var key = System.Console.ReadKey(true).Key;
+            System.Console.WriteLine();
 
             if (key == ConsoleKey.Y)
             {
@@ -91,16 +91,16 @@ internal abstract class CalcAppBase
                 return true;
             }
 
-            Console.WriteLine("You miss the button");
+            System.Console.WriteLine("You miss the button");
         }
     }
 
-    protected ConsoleKey RequestToOperation()
+    protected virtual ConsoleKey RequestToOperation()
     {
-        Console.WriteLine("Push operation symbol. This is a test project, supported only [+, -. *, /] symbols.");
-        Console.WriteLine("Push Backspace to remove last operation.");
-        Console.WriteLine("To exit push ESC or Spacebar.");
-        ConsoleKey operation = Console.ReadKey(true).Key;
+        System.Console.WriteLine("Push operation symbol. This is a test project, supported only [+, -. *, /] symbols.");
+        System.Console.WriteLine("Push Backspace to remove last operation.");
+        System.Console.WriteLine("To exit push ESC or Spacebar.");
+        ConsoleKey operation = System.Console.ReadKey(true).Key;
 
         if (_supportedConsoleKeys.Contains(operation))
         {

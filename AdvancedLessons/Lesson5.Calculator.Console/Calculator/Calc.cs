@@ -1,7 +1,7 @@
 ﻿using Lesson5.Calculator.Console.Interfaces;
 
 namespace Lesson5.Calculator.Console;
-internal class Calc : ICalc
+public class Calc : ICalc
 {
     private readonly Stack<double> _lastStack;
 
@@ -11,7 +11,7 @@ internal class Calc : ICalc
 
     public double Result { get; private set; }
 
-    internal Calc(double? result = 0)
+    public Calc(double? result = 0)
     {
         Result = result ?? 0;
         _lastStack = new Stack<double>();
