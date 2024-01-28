@@ -1,17 +1,19 @@
-﻿using System.Windows;
+﻿using Lesson5_6.CalculatorWPF.Calculator;
+using System.Windows;
 
-namespace Lesson5.CalculatorWPF;
+namespace Lesson5_6.CalculatorWPF;
 /// <summary>
 /// Interaction logic for MainWindow.xaml
 /// </summary>
 public partial class MainWindow : Window
 {
-    Calc calc;
+    private readonly ICalc calc;
+
     public MainWindow()
     {
         InitializeComponent();
-        calc = new Calc();
-        calc.CalcAdvancedEventHandler += Calc_CalcAdvancedEventHandler; ;
+        calc = new SafeCalc();
+        calc.CalcAdvancedEventHandler += Calc_CalcAdvancedEventHandler;
     }
 
     private void Calc_CalcAdvancedEventHandler(object? sender, EventCalc e)
@@ -48,6 +50,10 @@ public partial class MainWindow : Window
                 break;
             case "Cancel":
                 calc.CancelLast();
+                break;
+            case "Clear":
+                calc.Clear();
+                InputText.Clear();
                 break;
             default:
                 MessageBox.Show("Ошибка пользователя.");

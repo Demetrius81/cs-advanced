@@ -2,7 +2,7 @@
 using System.Data;
 using System.Windows;
 
-namespace Lesson5.CalculatorWPF;
+namespace Lesson5_6.CalculatorWPF;
 /// <summary>
 /// Interaction logic for App.xaml
 /// </summary>
