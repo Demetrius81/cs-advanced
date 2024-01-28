@@ -24,7 +24,7 @@ public partial class MainWindow : Window
 
     private void Button_Click(object sender, RoutedEventArgs e)
     {
-        bool parse = int.TryParse(InputText.Text, out int value);
+        bool parse = double.TryParse(InputText.Text, out double value);
 #pragma warning disable CS8602 // Dereference of a possibly null reference.
         string name = (e.Source as FrameworkElement).Name;
 #pragma warning restore CS8602 // Dereference of a possibly null reference.
