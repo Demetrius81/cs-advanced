@@ -6,6 +6,6 @@ internal class Program
 {
     static void Main(string[] args)
     {
-        Part1.Run(args);
+        Part2.Run(args);
     }
 }

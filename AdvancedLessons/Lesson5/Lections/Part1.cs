@@ -5,12 +5,19 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Lesson5.Lections;
+
 delegate void MyDelegate();
+delegate TResult MyGenericDelegate<T, TResult>(T x);
+
 internal static class Part1
 {
     public static void SayHello()
     {
         Console.WriteLine("Привет, я - делегат!");
+    }
+    public static string SayHello(string name)
+    {
+        return $"Привет, я - {name}!";
     }
 
     public static void SayBye()
@@ -49,5 +56,13 @@ internal static class Part1
             Console.WriteLine($"Вызываем метод: {del.Method}");
             del();
         }
+
+        Console.WriteLine("------------------------------------------------");
+
+        MyGenericDelegate<string, string>? myDelegate1 = SayHello;
+        Console.WriteLine(myDelegate1("Делегат"));
+
+        Console.WriteLine("------------------------------------------------");
+
     }
 }
