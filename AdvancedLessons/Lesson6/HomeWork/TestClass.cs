@@ -4,7 +4,7 @@ public class TestClass
 {
     public int I { get; set; }
     private string? S { get; set; }
-    [CustomName("TestSuperPrpperty")]
+    [CustomName("TestSuperPrpperty")] // Добавил атрибут. )
     public decimal D { get; set; }
     public char[]? C { get; set; }
 
