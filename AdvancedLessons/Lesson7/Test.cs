@@ -1,46 +1,56 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace Lesson7;
 
-namespace Lesson7;
 internal class Test
 {
-    public void Run(string[] args)
+    private List<string> List { get; set; } = [];
+
+    public List<string> FindFilesByExtensionAndText(string fileExt, string path, string text)
     {
-#pragma warning disable S1075 // URIs should not be hardcoded
-        string path = """D:\проекты""";
-#pragma warning restore S1075 // URIs should not be hardcoded
-        string fileName = """index.html""";
-        Console.WriteLine(FindFile(fileName, path));
+        List.Clear();
+        FindFileFullPath(fileExt, path, text);
+        return List;
     }
 
-    public bool FindFile(string fileName, string path)
-    {
-        return FindFileFullPath(fileName, path) is not null;
-    }
-
-    public string? FindFileFullPath(string fileName, string path)
+    private void FindFileFullPath(string fileExt, string path, string text)
     {
         foreach (var name in Directory.GetFiles(path))
         {
-            if (Path.GetFileName(name) == fileName)
+            var nameExtArr = Path.GetFileName(name).Split(".");
+
+            if (nameExtArr.Length == 2 && nameExtArr[1] == fileExt)
             {
-                return Path.GetFullPath(name);
+                var temp = Path.GetFullPath(name);
+                if (FileContains(temp, text))
+                {
+                    List.Add(temp);
+                }
             }
         }
 
         foreach (var dir in Directory.GetDirectories(path))
         {
-            var file = FindFileFullPath(fileName, dir);
-
-            if (file is not null)
-            {
-                return file;
-            }
+            FindFileFullPath(fileExt, dir, text);
         }
+    }
 
-        return null;
+    private bool FileContains(string path, string text)
+    {
+        using (StreamReader sr = new(path))
+        {
+#pragma warning disable S2589 // Boolean expressions should not be gratuitous
+            if (sr is not null)
+            {
+                while (!sr.EndOfStream)
+                {
+                    var temp = sr.ReadLine();
+                    if (temp is not null && temp.Contains(text))
+                    {
+                        return true;
+                    }
+                }
+            }
+#pragma warning restore S2589 // Boolean expressions should not be gratuitous
+            return false;
+        }
     }
 }
