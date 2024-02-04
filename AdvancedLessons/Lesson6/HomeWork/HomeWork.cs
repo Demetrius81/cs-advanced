@@ -15,9 +15,9 @@ internal class HomeWork
 
         var s = ObjectToString(new TestClass(15, "STR", 2.2m, new char[] { 'A', 'B', 'C' }));
         Console.WriteLine(s);
-        var o = StringToObject(s) as TestClass;
+        //var o = StringToObject(s) as TestClass;
 
-        Console.WriteLine(o.GetType());
+        //Console.WriteLine(o.GetType());
 
     }
 
@@ -50,13 +50,16 @@ internal class HomeWork
 
     static object StringToObject(string s)
     {
+        Console.WriteLine("-------------------------------------------------------------");
+        Console.WriteLine(s);
+        Console.WriteLine("-------------------------------------------------------------");
         var values = s.Split("|").ToList();
         values.Remove("");
 
         var classAssemblyAndName = values[0].Split(':');
 
         //var obj = Activator.CreateInstance(typeof(TestClass));
-        var obj = Activator.CreateInstance(classAssemblyAndName[0],"Lesson6.TestClass" /*classAssemblyAndName[1]*/)?.Unwrap();
+        var obj = Activator.CreateInstance(classAssemblyAndName[0],/*"Lesson6.TestClass"*/ classAssemblyAndName[1])?.Unwrap();
 
         if (values.Count > 1 && obj is not null)
         {
