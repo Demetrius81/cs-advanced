@@ -1,0 +1,44 @@
+{
+  "name": "interno",
+  "version": "0.1.0",
+  "private": true,
+  "num": 4,
+  "another-num": 76.568,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint"
+  },
+  "test": [
+    {
+      "serve": "vue-cli-service serve",
+      "build": "vue-cli-service build",
+      "lint": "vue-cli-service lint"
+    },
+    {
+      "serve2": "vue-cli-service serve",
+      "build2": "vue-cli-service build",
+      "lint2": "vue-cli-service lint"
+    }
+  ],
+  "dependencies": {
+    "core-js": "^3.8.3",
+    "vue": "^2.6.14",
+    "vue-router": "^3.5.1",
+    "vuex": "^3.6.2"
+  },
+  "devDependencies": {
+    "babelcore": "^7.12.16",
+    "babeleslint-parser": "^7.12.16",
+    "vue-cli-plugin-babel": "~5.0.0",
+    "vue-cli-plugin-eslint": "~5.0.0",
+    "vue-cli-plugin-router": "~5.0.0",
+    "vue-cli-plugin-vuex": "~5.0.0",
+    "vue-cli-service": "~5.0.0",
+    "eslint": "^7.32.0",
+    "eslint-plugin-vue": "^8.0.3",
+    "sass": "^1.32.7",
+    "sass-loader": "^12.0.0",
+    "vue-template-compiler": "^2.6.14"
+  }
+}
